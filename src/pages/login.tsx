@@ -9,7 +9,11 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const router = useRouter();
-  const postLogin = useAuthStore((state) => state.postLogin);
+  const [postLogin, setUser] = useAuthStore(({ postLogin, setUser }) => [
+    postLogin,
+    setUser,
+  ]);
+  const ctx = api.useContext();
 
   const clearInputs = () => {
     setUsername("");
@@ -17,8 +21,10 @@ const Login = () => {
   };
 
   const { error, mutate: login } = api.auth.login.useMutation({
-    onSuccess(data) {
+    onSuccess: async (data) => {
       postLogin(data);
+      const user = await ctx.auth.getUserFromToken.fetch();
+      setUser(user);
       router.push("/");
     },
     onError: clearInputs,

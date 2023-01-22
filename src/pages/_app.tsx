@@ -2,14 +2,17 @@ import { type AppType } from "next/app";
 import { api } from "../utils/api";
 import "../styles/globals.css";
 import { Header } from "../components/Header";
+import { AuthProtection } from "../components/AuthProtection";
 
-const MyApp: AppType = ({ Component, pageProps }) => {
+const NotesApp: AppType = ({ Component, pageProps }) => {
   return (
     <>
       <Header />
-      <Component {...pageProps} />;
+      <AuthProtection>
+        <Component {...pageProps} />
+      </AuthProtection>
     </>
   );
 };
 
-export default api.withTRPC(MyApp);
+export default api.withTRPC(NotesApp);

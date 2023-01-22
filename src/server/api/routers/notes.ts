@@ -1,35 +1,45 @@
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { z } from "zod";
 
-const NoteInput = z.object({
+const CreateNoteInput = z.object({
   title: z.string(),
   content: z.string(),
+  folderId: z.number(),
+});
+
+const GetNotesInput = z.object({
+  folderId: z.number(),
 });
 
 export const notesRouter = createTRPCRouter({
-  getNotes: publicProcedure.query(({ ctx }) => {
+  getNotes: publicProcedure.input(GetNotesInput).query(({ ctx, input }) => {
     if (!ctx.user) throw new Error("Unauthorized");
     return ctx.prisma.note.findMany({
       where: {
-        CreateBy: {
+        Folder: {
           id: {
-            equals: ctx.user.id,
+            equals: input.folderId,
+          },
+          User: {
+            id: {
+              equals: ctx.user.id,
+            },
           },
         },
       },
     });
   }),
   createNote: publicProcedure
-    .input(NoteInput)
-    .mutation(({ ctx, input: { title, content } }) => {
+    .input(CreateNoteInput)
+    .mutation(({ ctx, input: { title, content, folderId } }) => {
       if (!ctx.user) throw new Error("Unauthorized");
       return ctx.prisma.note.create({
         data: {
           title,
           content,
-          CreateBy: {
+          Folder: {
             connect: {
-              id: ctx.user.id,
+              id: folderId,
             },
           },
         },
