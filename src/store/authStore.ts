@@ -11,7 +11,6 @@ type AuthStore = {
 
 export const useAuthStore = create<AuthStore>((set) => ({
   user: undefined,
-  token: undefined,
   postLogin: (token) => {
     useTokenStore.setState({ token });
   },
