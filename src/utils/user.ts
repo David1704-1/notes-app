@@ -14,4 +14,4 @@ export const parseTokenToUser = (token: string) => {
   return user.success ? user.data : undefined;
 };
 
-export type LoggedInUserType = ReturnType<typeof parseTokenToUser>;
+export type LoggedInUserType = z.infer<typeof LoggedInUser> | undefined;
