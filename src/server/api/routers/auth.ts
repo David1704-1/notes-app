@@ -34,11 +34,10 @@ export const authRouter = createTRPCRouter({
   }),
   login: publicProcedure.input(UserInput).mutation(async ({ ctx, input }) => {
     const { username, password } = input;
-    const user = await ctx.prisma.user.findFirst({
+    const user = await ctx.prisma.user.findFirstOrThrow({
       where: {
         username,
       },
-      rejectOnNotFound: true,
     });
     await compare(password, user.password_hash);
     const token = sign(

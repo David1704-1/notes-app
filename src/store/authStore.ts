@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { LoggedInUserType } from "../utils/user";
+import type { LoggedInUserType } from "../utils/user";
 import { useTokenStore } from "./tokenStore";
 
 type AuthStore = {

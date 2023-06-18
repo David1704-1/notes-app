@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { FormEvent, useState } from "react";
+import { type FormEvent, useState } from "react";
 import { CustomHead } from "../components/CustomHead";
 import { useAuthStore } from "../store/authStore";
 import { api } from "../utils/api";
@@ -25,7 +25,7 @@ const Login = () => {
       postLogin(data);
       const user = await ctx.auth.getUserFromToken.fetch();
       setUser(user);
-      router.push("/");
+      void router.push("/");
     },
     onError: clearInputs,
   });

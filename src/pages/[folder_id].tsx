@@ -16,12 +16,12 @@ const FolderPage = () => {
   const ctx = api.useContext();
   const { mutate: createNote } = api.notes.createNote.useMutation({
     onSuccess: () => {
-      ctx.notes.invalidate();
+      void ctx.notes.invalidate();
     },
   });
   return (
     <>
-      <CustomHead title={`Folder: ${folder?.name}`} />
+      <CustomHead title={`Folder: ${folder?.name ?? ""}`} />
       <div className="mt-14 flex flex-col items-center">
         {notes.length > 0 ? (
           notes.map((note) => <NoteItem key={note.id} note={note} />)

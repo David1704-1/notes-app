@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useAuthStore } from "../store/authStore";
 
 export const Header = () => {
@@ -5,7 +6,7 @@ export const Header = () => {
   return (
     <div className="fixed top-0 flex h-12 w-screen flex-row items-center justify-between bg-slate-700">
       <h1 className="ml-6 font-bold text-white ">
-        <a href="/">Notes App</a>
+        <Link href="/">Notes App</Link>
       </h1>
       <div className="mr-6 flex flex-row">
         {user ? (
@@ -18,10 +19,10 @@ export const Header = () => {
         ) : (
           <>
             <h1 className="text-white">
-              <a href="/login">Log in</a>
+              <Link href="/login">Log in</Link>
             </h1>
             <h1 className="ml-6 text-white">
-              <a href="/signup">Sign up</a>
+              <Link href="/signup">Sign up</Link>
             </h1>
           </>
         )}

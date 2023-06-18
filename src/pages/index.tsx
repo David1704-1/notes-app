@@ -10,7 +10,7 @@ const Home = () => {
   const router = useRouter();
   const { mutate: createFolder } = api.folders.createFolder.useMutation({
     onSuccess: () => {
-      ctx.folders.getFolders.invalidate();
+      void ctx.folders.getFolders.invalidate();
     },
   });
   const { data: folders = [] } = api.folders.getFolders.useQuery();
@@ -26,7 +26,7 @@ const Home = () => {
                 <Folder
                   key={id}
                   name={name}
-                  onClick={() => router.push(`/${id}`)}
+                  onClick={() => void router.push(`/${id}`)}
                 />
               ))}
             </div>

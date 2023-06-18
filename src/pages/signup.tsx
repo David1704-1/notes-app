@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { FormEvent, useState } from "react";
+import { type FormEvent, useState } from "react";
 import { CustomHead } from "../components/CustomHead";
 import { useAuthStore } from "../store/authStore";
 import { api } from "../utils/api";
@@ -15,7 +15,7 @@ const Signup = () => {
   const { error, mutate: signUp } = api.auth.signup.useMutation({
     onSuccess(data) {
       postLogin(data);
-      router.push("/");
+      void router.push("/");
     },
   });
 
