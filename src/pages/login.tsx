@@ -51,6 +51,7 @@ const Login = () => {
               type="text"
               className="rounded border border-gray-500"
               name="username"
+              data-testid="login-username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -59,10 +60,13 @@ const Login = () => {
               type="password"
               className="rounded border border-gray-500"
               name="password"
+              data-testid="login-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button type="submit">Log in</button>
+            <button type="submit" data-testid="loginsubmit">
+              Log in
+            </button>
           </form>
         )}
       </div>

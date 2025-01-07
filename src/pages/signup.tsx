@@ -48,28 +48,33 @@ const Signup = () => {
             <label htmlFor="username">Username</label>
             <input
               type="text"
+              data-testid="usernameinput"
               className="rounded border border-gray-500"
               name="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
-            <label htmlFor="passoword">Password</label>
+            <label htmlFor="password">Password</label>
             <input
               type="password"
+              data-testid="passwordinput"
               className="rounded border border-gray-500"
               name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <label htmlFor="passowordConfirm">Password confirm</label>
+            <label htmlFor="passwordConfirm">Password confirm</label>
             <input
               type="password"
+              data-testid="passwordconfirminput"
               className="rounded border border-gray-500"
               name="passowordConfirm"
               value={passwordConfirm}
               onChange={(e) => setPasswordConfirm(e.target.value)}
             />
-            <button type="submit">Sign up</button>
+            <button type="submit" data-testid="signupconfirm">
+              Sign up
+            </button>
           </form>
         )}
       </div>

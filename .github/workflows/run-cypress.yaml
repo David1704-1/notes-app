@@ -1,0 +1,72 @@
+name: Run Cypress Tests with PostgreSQL
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  cypress-tests:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: cypress
+          POSTGRES_PASSWORD: cypress
+          POSTGRES_DB: notes
+        options: >-
+          --health-cmd="pg_isready -U cypress"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      # Step 1: Check out the code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Wait for PostgreSQL to be ready
+      - name: Wait for PostgreSQL
+        run: |
+          until pg_isready -h 127.0.0.1 -p 5432 -U cypress; do
+            echo "Waiting for PostgreSQL...";
+            sleep 2;
+          done
+
+      # Step 5: Run database migrations (if applicable)
+      - name: Run Prisma migrations
+        run: npx prisma db push
+        env:
+          DATABASE_URL: ${{ secrets.CYPRESS_DB_URL }}
+
+      # Step 6: Start your application
+      - name: Start the application
+        run: npm run dev
+        env:
+          DATABASE_URL: ${{ secrets.CYPRESS_DB_URL }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+
+      # Step 7: Wait for the application to be ready
+      - name: Wait for the application
+        run: npx wait-on http://localhost:3000
+
+      # Step 8: Run Cypress tests
+      - name: Run Cypress tests
+        run: npx cypress run

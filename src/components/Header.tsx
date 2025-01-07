@@ -11,18 +11,26 @@ export const Header = () => {
       <div className="mr-6 flex flex-row">
         {user ? (
           <>
-            <h1 className="text-white">Hello, {user.username}</h1>
-            <button onClick={logout} className="ml-4 rounded bg-white p-[2px]">
+            <h1 className="text-white" data-testid="hellomessage">
+              Hello, {user.username}
+            </h1>
+            <button
+              onClick={logout}
+              className="ml-4 rounded bg-white p-[2px]"
+              data-testid="logoutbutton"
+            >
               Log out
             </button>
           </>
         ) : (
           <>
-            <h1 className="text-white">
+            <h1 className="text-white" data-testid="loginbutton">
               <Link href="/login">Log in</Link>
             </h1>
             <h1 className="ml-6 text-white">
-              <Link href="/signup">Sign up</Link>
+              <Link href="/signup" data-testid="signupbutton">
+                Sign up
+              </Link>
             </h1>
           </>
         )}
