@@ -6,7 +6,7 @@ export const Header = () => {
   return (
     <div className="fixed top-0 flex h-12 w-screen flex-row items-center justify-between bg-slate-700">
       <h1 className="ml-6 font-bold text-white ">
-        <Link href="/">Notes App</Link>
+        <Link href="/">Notes Application</Link>
       </h1>
       <div className="mr-6 flex flex-row">
         {user ? (
